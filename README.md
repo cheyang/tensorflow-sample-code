@@ -1,2 +1,2 @@
-# tensorflow-aliyun
-The sample code of running TensorFlow in Alibaba Cloud
+# tensorflow sample code
+The sample code of running TensorFlow 
