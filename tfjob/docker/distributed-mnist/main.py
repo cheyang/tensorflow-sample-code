@@ -51,6 +51,15 @@ def train():
   server = tf.train.Server(server_def)
 
   is_chief = (job_name == 'master')
+  if job_name == 'ps':
+    server.join()
+
+  if is_chief:
+        print("Worker %d: Initializing session..." % task_id)
+        tf.reset_default_graph()
+  else:
+        print("Worker %d: Waiting for session to be initialized..." % task_id)
+
 
   # Import data
   mnist = input_data.read_data_sets(FLAGS.data_dir,
@@ -63,8 +72,11 @@ def train():
 
   # Between-graph replication
   with tf.device(tf.train.replica_device_setter(
-    worker_device="/job:worker/task:%d" % task_id,
+    worker_device="/job:{0}/task:{1}".format(job_name,task_id),
     cluster=cluster_spec)):
+  # with tf.device(tf.train.replica_device_setter(cluster=cluster_spec)):
+    # worker_device="/job:{0}/task:{1}".format(job_name,task_id),
+    # cluster=cluster_spec)):
 
     # count the number of updates
     global_step = tf.get_variable(
@@ -186,6 +198,8 @@ def train():
 						global_step=global_step,
 						init_op=init_op,
 						logdir=FLAGS.logdir)
+  # sess_config = tf.ConfigProto(allow_soft_placement=True, log_device_placement=True,
+  #                               device_filters=["/job:ps", "/job:worker/task:%d" % FLAGS.worker_index])
 
   with sv.prepare_or_wait_for_session(server.target) as sess:  
     train_writer = tf.summary.FileWriter(FLAGS.logdir + '/train', sess.graph)
