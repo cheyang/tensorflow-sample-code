@@ -160,10 +160,12 @@ def train():
       # So here we use tf.nn.softmax_cross_entropy_with_logits on the
       # raw outputs of the nn_layer above, and then average across
       # the batch.
-      diff = tf.nn.softmax_cross_entropy_with_logits(labels=y_, logits=y)
-      with tf.name_scope('total'):
-        cross_entropy = tf.reduce_mean(diff)
-    tf.summary.scalar('cross_entropy', cross_entropy)
+      #diff = tf.nn.softmax_cross_entropy_with_logits(labels=y_, logits=y)
+      # with tf.name_scope('total'):
+        #cross_entropy = tf.reduce_mean(diff)
+      logits = tf.nn.softmax(y, name='logits')
+      cross_entropy = -tf.reduce_sum(y_ * tf.log(logits), name='cross_entropy')
+      tf.summary.scalar('cross_entropy', cross_entropy)
 
     with tf.name_scope('train'):
       train_step = tf.train.AdamOptimizer(FLAGS.learning_rate).minimize(
