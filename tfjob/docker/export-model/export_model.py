@@ -40,6 +40,16 @@ def main(_):
   ckpt_path=os.path.join(FLAGS.checkpoint_path, checkpoint_basename + '-0')
   meta_graph_file=ckpt_path + default_meta_graph_suffix
   with tf.Session() as new_sess:
+#   with new_sess.graph.as_default():
+  #  tf.reset_default_graph()
+  #  new_sess.run(tf.initialize_all_variables())
+    new_saver = tf.train.import_meta_graph(meta_graph_file, clear_devices=True) #'/test/mnistoutput/ckpt.meta')
+    new_saver.restore(new_sess, ckpt_path) #'/test/mnistoutput/ckpt')
+    new_graph = tf.get_default_graph()
+    new_x = new_graph.get_tensor_by_name('input/x-input:0')
+    print(new_x)
+    new_y = new_graph.get_tensor_by_name('cross_entropy/logits:0')
+    print(new_y)
 
   # Export model
   # WARNING(break-tutorial-inline-code): The following code snippet is
