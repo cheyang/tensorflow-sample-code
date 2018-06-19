@@ -1,4 +1,6 @@
 FROM tensorflow/tensorflow:1.5.0
-COPY client.py /app/client.py
+
+WORKDIR /app
+ADD . /app
 
 ENTRYPOINT ["tail", "-f", "/dev/null"]
