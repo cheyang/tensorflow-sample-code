@@ -6,5 +6,5 @@ DOCKER ?= docker
 all: cpu
 
 cpu:
-	$(DOCKER) build --no-cache -f Dockerfile.cpu -t registry.cn-hangzhou.aliyuncs.com/tensorflow-samples/export-model .
-        $(DOCKER) push registry.cn-hangzhou.aliyuncs.com/tensorflow-samples/export-model
+    $(DOCKER) build --no-cache -f Dockerfile -t registry.cn-hangzhou.aliyuncs.com/tensorflow-samples/export-model .
+    $(DOCKER) push registry.cn-hangzhou.aliyuncs.com/tensorflow-samples/export-model
