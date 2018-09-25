@@ -143,10 +143,13 @@ def main(_):
         batch_size=FLAGS.steps,
         num_epochs=None,
         shuffle=True)
-    classifier.train(
-        input_fn=train_input_fn,
-        steps=100,
-        hooks=[logging_hook])
+    train_spec = tf.estimator.TrainSpec(input_fn=train_input_fn,
+                                        max_steps=100,
+                                        hooks=[logging_hook])
+    # classifier.train(
+    #    input_fn=train_input_fn,
+    #    steps=100,
+    #    hooks=[logging_hook])
 
     # Evaluate the model and print results
     eval_input_fn = tf.estimator.inputs.numpy_input_fn(
@@ -154,8 +157,10 @@ def main(_):
         y=eval_labels,
         num_epochs=1,
         shuffle=False)
-    eval_results = classifier.evaluate(input_fn=eval_input_fn)
-    print(eval_results)
+    eval_spec = tf.estimator.EvalSpec(input_fn=eval_input_fn)
+    # eval_results = classifier.evaluate(input_fn=eval_input_fn)
+    # print(eval_results)
+    tf.estimator.train_and_evaluate(classifier, train_spec, eval_spec)
 
     # Save the model
     classifier.export_savedmodel(FLAGS.saved_dir,
