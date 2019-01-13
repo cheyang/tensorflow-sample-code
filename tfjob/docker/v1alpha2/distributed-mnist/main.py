@@ -179,7 +179,7 @@ def train():
     tf.summary.scalar('accuracy', accuracy)
 
     # Merge all the summaries and write them out to
-    # /tmp/tensorflow/mnist/logs/mnist_with_summaries (by default)
+    # /train/tensorflow/mnist/logs/mnist_with_summaries (by default)
     merged = tf.summary.merge_all()  
 
     init_op = tf.global_variables_initializer()
@@ -251,13 +251,13 @@ if __name__ == '__main__':
   parser.add_argument(
       '--data_dir',
       type=str,
-      default=os.path.join(os.getenv('TEST_TMPDIR', '/tmp'),
+      default=os.path.join(os.getenv('TEST_TMPDIR', '/train'),
                            'tensorflow/input_data'),
       help='Directory for storing input data')
   parser.add_argument(
       '--logdir',
       type=str,
-      default=os.path.join(os.getenv('TEST_TMPDIR', '/tmp'),
+      default=os.path.join(os.getenv('TEST_TMPDIR', '/train'),
                            'tensorflow/logs'),
       help='Summaries log directory')
   FLAGS, unparsed = parser.parse_known_args()
