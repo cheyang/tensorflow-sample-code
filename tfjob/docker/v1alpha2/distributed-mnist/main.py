@@ -240,7 +240,7 @@ def main(_):
 if __name__ == '__main__':
   parser = argparse.ArgumentParser()
   parser.add_argument('--fake_data', nargs='?', const=True, type=bool,
-                      default=False,
+                      default=True,
                       help='If true, uses fake data for unit testing.')
   parser.add_argument('--max_steps', type=int, default=1000,
                       help='Number of steps to run trainer.')
