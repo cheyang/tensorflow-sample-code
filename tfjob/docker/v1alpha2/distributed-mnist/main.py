@@ -240,7 +240,7 @@ def main(_):
 if __name__ == '__main__':
   parser = argparse.ArgumentParser()
   parser.add_argument('--fake_data', nargs='?', const=True, type=bool,
-                      default=True,
+                      default=False,
                       help='If true, uses fake data for unit testing.')
   parser.add_argument('--max_steps', type=int, default=1000,
                       help='Number of steps to run trainer.')
@@ -252,7 +252,7 @@ if __name__ == '__main__':
       '--data_dir',
       type=str,
       default=os.path.join(os.getenv('TEST_TMPDIR', '/train'),
-                           'tensorflow/input_data'),
+                           'data'),
       help='Directory for storing input data')
   parser.add_argument(
       '--logdir',
