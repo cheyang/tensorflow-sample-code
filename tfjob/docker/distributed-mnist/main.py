@@ -255,7 +255,7 @@ if __name__ == '__main__':
                            'data'),
       help='Directory for storing input data')
   parser.add_argument(
-      '--logdir',
+      '--log_dir',
       type=str,
       default=os.path.join(os.getenv('TEST_TMPDIR', '/tmp'),
                            'tensorflow/logs'),

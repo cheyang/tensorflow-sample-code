@@ -255,7 +255,7 @@ if __name__ == '__main__':
                            'data'),
       help='Directory for storing input data')
   parser.add_argument(
-      '--logdir',
+      '--log_dir',
       type=str,
       default='/training_logs',
       help='Summaries log directory')

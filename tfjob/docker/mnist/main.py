@@ -34,6 +34,7 @@ FLAGS = None
 
 
 def train():
+  print("data dir: {0}".format(FLAGS.data_dir))
   # Import data
   mnist = input_data.read_data_sets(FLAGS.data_dir,
                                     one_hot=True,
