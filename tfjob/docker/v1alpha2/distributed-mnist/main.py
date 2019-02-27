@@ -199,13 +199,13 @@ def train():
   sv = tf.train.Supervisor(is_chief=is_chief,
 						global_step=global_step,
 						init_op=init_op,
-						logdir=FLAGS.logdir)
+						log_dir=FLAGS.log_dir)
   # sess_config = tf.ConfigProto(allow_soft_placement=True, log_device_placement=True,
   #                               device_filters=["/job:ps", "/job:worker/task:%d" % FLAGS.worker_index])
 
   with sv.prepare_or_wait_for_session(server.target) as sess:  
-    train_writer = tf.summary.FileWriter(FLAGS.logdir + '/train', sess.graph)
-    test_writer = tf.summary.FileWriter(FLAGS.logdir + '/test')
+    train_writer = tf.summary.FileWriter(FLAGS.log_dir + '/train', sess.graph)
+    test_writer = tf.summary.FileWriter(FLAGS.log_dir + '/test')
     # Train the model, and also write summaries.
     # Every 10th step, measure test-set accuracy, and write test summaries
     # All other steps, run train_step on training data, & add training summaries
