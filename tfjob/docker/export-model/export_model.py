@@ -29,10 +29,10 @@ def main(_):
           '[--model_version=y] [--checkpoint_path=checkpoint_store_path] export_dir')
     sys.exit(-1)
   if FLAGS.model_version <= 0:
-    print 'Please specify a positive value for exported serveable version number.'
+    print('Please specify a positive value for exported serveable version number.')
     sys.exit(-1)
   if not FLAGS.checkpoint_path:
-    print 'Please specify the correct path where checkpoints stored locally or in OSS.'
+    print('Please specify the correct path where checkpoints stored locally or in OSS.')
     sys.exit(-1)
 
   checkpoint_basename="model.ckpt"
@@ -59,7 +59,7 @@ def main(_):
     export_path = os.path.join(
       compat.as_bytes(export_path_base),
       compat.as_bytes(str(FLAGS.model_version)))
-    print 'Exporting trained model to', export_path
+    print('Exporting trained model to', export_path)
     builder = saved_model_builder.SavedModelBuilder(export_path)
 
   # Build the signature_def_map.
@@ -83,7 +83,7 @@ def main(_):
       clear_devices=True)
     builder.save()
 
-  print 'Done exporting!'
+  print('Done exporting!')
 
 if __name__ == '__main__':
   tf.app.run()

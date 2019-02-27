@@ -154,13 +154,16 @@ def train():
   # Train the model, and also write summaries.
   # Every 10th step, measure test-set accuracy, and write test summaries
   # All other steps, run train_step on training data, & add training summaries
-
+  saver = tf.train.Saver()
 
   for i in range(FLAGS.max_steps):
     if i % 10 == 0:  # Record summaries and test-set accuracy
       summary, acc = sess.run([merged, accuracy], feed_dict=feed_dict(False))
       test_writer.add_summary(summary, i)
       print('Accuracy at step %s: %s' % (i, acc))
+      if i % 100 == 0:
+        print('Save checkpoint at step %s: %s' % (i, acc))
+        saver.save(sess, FLAGS.log_dir + '/model.ckpt', global_step=i)
     else:  # Record train set summaries, and train
       if i % 100 == 99:  # Record execution stats
         run_options = tf.RunOptions(trace_level=tf.RunOptions.FULL_TRACE)
