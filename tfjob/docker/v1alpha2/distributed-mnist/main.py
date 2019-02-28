@@ -164,7 +164,7 @@ def train():
       # with tf.name_scope('total'):
         #cross_entropy = tf.reduce_mean(diff)
       logits = tf.nn.softmax(y, name='logits')
-      cross_entropy = -tf.reduce_sum(y_ * tf.log(logits), name='cross_entropy')
+      cross_entropy = -tf.reduce_sum(y_ * tf.log(tf.clip_by_value(logits,1e-10,1.0)), name='cross_entropy')
       tf.summary.scalar('cross_entropy', cross_entropy)
 
     with tf.name_scope('train'):
