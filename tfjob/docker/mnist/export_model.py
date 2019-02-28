@@ -48,7 +48,7 @@ def main(_):
     new_graph = tf.get_default_graph()
     new_x = new_graph.get_tensor_by_name('input/x-input:0')
     print(new_x)
-    new_y = new_graph.get_tensor_by_name('layer1/activation:0')
+    new_y = new_graph.get_tensor_by_name('layer2/activation:0')
     print(new_y)
 
   # Export model
