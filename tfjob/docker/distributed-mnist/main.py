@@ -199,7 +199,7 @@ def train():
   sv = tf.train.Supervisor(is_chief=is_chief,
 						global_step=global_step,
 						init_op=init_op,
-						log_dir=FLAGS.log_dir)
+						logdir=FLAGS.log_dir)
   # sess_config = tf.ConfigProto(allow_soft_placement=True, log_device_placement=True,
   #                               device_filters=["/job:ps", "/job:worker/task:%d" % FLAGS.worker_index])
 
