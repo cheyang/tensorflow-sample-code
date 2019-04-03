@@ -3,7 +3,7 @@ The model is a pretrained  "MNIST", which saved as TensorFlow model checkpoint. 
 simply uses TensorFlow SavedModel to
 export the trained model with proper signatures that can be loaded by standard
 tensorflow_model_server.
-Usage: mnist_export.py [--model_version=y] [--checkpoint_dir=checkpoint_oss_path]  export_dir
+Usage: mnist_export.py [--model_version=y] [--checkpoint_dir=checkpoint_oss_path] [--checkpoint_step=checkpoint_step] export_dir
 """
 
 import os
@@ -19,6 +19,7 @@ from tensorflow.python.util import compat
 from tensorflow.examples.tutorials.mnist import input_data as mnist_input_data
 
 tf.app.flags.DEFINE_integer('model_version', 1, 'version number of the exported model.')
+tf.app.flags.DEFINE_integer('checkpoint_step', 0, 'Checkpoint steps that we export.')
 tf.app.flags.DEFINE_string('checkpoint_path', None, 'Checkpoints path.')
 FLAGS = tf.app.flags.FLAGS
 
@@ -26,7 +27,7 @@ FLAGS = tf.app.flags.FLAGS
 def main(_):
   if len(sys.argv) < 2 or sys.argv[-1].startswith('-'):
     print('Usage: mnist_dist_export.py '
-          '[--model_version=y] [--checkpoint_path=checkpoint_store_path] export_dir')
+          '[--model_version=y] [--checkpoint_path=checkpoint_store_path] [--checkpoint_step=checkpoint_step] export_dir')
     sys.exit(-1)
   if FLAGS.model_version <= 0:
     print('Please specify a positive value for exported serveable version number.')
@@ -37,7 +38,7 @@ def main(_):
 
   checkpoint_basename="model.ckpt"
   default_meta_graph_suffix='.meta'
-  ckpt_path=os.path.join(FLAGS.checkpoint_path, checkpoint_basename + '-0')
+  ckpt_path=os.path.join(FLAGS.checkpoint_path, checkpoint_basename + '-' + str(FLAGS.checkpoint_step))
   meta_graph_file=ckpt_path + default_meta_graph_suffix
   with tf.Session() as new_sess:
 #   with new_sess.graph.as_default():
